@@ -1,12 +1,12 @@
 ﻿using AuthenticationService.Dtos;
-using Microsoft.AspNetCore.Http;
+using Dapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 namespace AuthenticationService.Controllers
 {
     [Route("api/[controller]")]
@@ -107,5 +107,62 @@ namespace AuthenticationService.Controllers
 
             return tokenHandler.WriteToken(token);
         }
+        [HttpPost]
+        [Route("login2")]
+        public void login2(string Username, string Surname)
+        {
+            string sql = "insert into UserTable(Username, Surname) values (@Username,@Surname)";
+            SqlConnection con = new SqlConnection("Server=LAPTOP-BA51GN1C\\SQLEXPRESS;Database=AuthServiceDB;Integrated Security=true;");
+            con.Open();
+            con.Execute(sql, new[]
+            {
+new {Username=Username, Surname = Surname}
+});
+        }
+        public class data
+        {
+            public string Username { get; set; }
+            public string Surname { get; set; }
+        }
+        [HttpGet]
+        [Route("getUser")]
+        public List<data> GetAllSummary()
+        {
+            string connectionString = "Server=LAPTOP-BA51GN1C\\SQLEXPRESS;Database=AuthServiceDB;Integrated Security=true;";
+            string query = "SELECT * from UserTable";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, conn);
+
+
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                //In this part below, I want the SqlDataReader to
+                //     read all of the records from database returned,
+                //     and I want the result to be returned as Array or
+                //     Json type, but I don't know how to write this part.
+
+                List<data> result = new List<data>();
+                if (reader.HasRows)
+                {
+
+                    while (reader.Read())
+                    {
+                        var d = new data();
+                        d.Username = (string)reader[1]; // Probably needs fixing
+                        d.Surname = (string)reader[2]; // Probably needs fixing
+                        result.Add(d);
+                    }
+                }
+
+                reader.Close();
+                return result;
+
+
+            }
+        }
+
     }
 }

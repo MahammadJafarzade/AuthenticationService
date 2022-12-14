@@ -12,10 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Build()
 //.MigrateDatabase()
 //.Run();
-// Add services to the container.
+////Add services to the container.
 
-//builder.Services.AddSingleton<DataContext>();
 //builder.Services.AddSingleton<Database>();
+//builder.Services.AddSingleton<DataContext>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
