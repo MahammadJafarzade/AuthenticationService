@@ -1,7 +1,5 @@
 using AuthenticationService.Data;
 using AuthenticationService.Dtos;
-using AuthenticationService.Extensions;
-using AuthenticationService.Migrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,13 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-//builder.Build()
-//.MigrateDatabase()
-//.Run();
-////Add services to the container.
 
-//builder.Services.AddSingleton<Database>();
-//builder.Services.AddSingleton<DataContext>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

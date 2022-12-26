@@ -18,8 +18,7 @@ namespace AuthenticationService.Data
         }
         public IDbConnection CreateConnection()
             => new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-        public IDbConnection CreateMasterConnection()
-            => new SqlConnection(_configuration.GetConnectionString("MasterConnection"));
+
 
         public DbSet<User> Users { get; set; }
     }
